@@ -2,8 +2,8 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
 
 jobs:
   build-and-release:
@@ -37,15 +37,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Generate Tag Name
-        id: tag_name
-        run: echo "v$(date +'%Y%m%d%H%M%S')" >> tag_name.txt
-
-      - name: Create Tag
-        run: git tag $(cat tag_name.txt)
-
-      - name: Github Release
+      - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          tag_name: ${{ steps.tag_name.outputs.stdout }}
           files: ./healthchecker-*
