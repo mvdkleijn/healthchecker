@@ -1,5 +1,12 @@
 # Healthchecker
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3dde6794f6c14b7badd3989cee3b5671)](https://app.codacy.com/gh/mvdkleijn/healthchecker/dashboard)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mvdkleijn/healthchecker)](https://goreportcard.com/report/github.com/mvdkleijn/healthchecker)
+![Liberapay patrons](https://img.shields.io/liberapay/patrons/mvdkleijn?style=for-the-badge)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/mvdkleijn/healthchecker?style=for-the-badge)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O4O7H6C73)
+
 Simplistic Go utility that does a HTTP HEAD check to see if a server app is alive. Ideal for in distroless containers.
 
 All it does (and likely will ever do) is:
