@@ -27,8 +27,8 @@ HEALTHCHECK --interval=5s --timeout=5s --retries=3 \
 
 ## Support
 
-Supported Go versions, see: https://endoflife.date/go
-Supported architectures: amd64, arm64
+- Go versions, see: https://endoflife.date/go
+- Architectures: amd64, arm64 on Windows and Linux
 
 Source code and issues: https://github.com/mvdkleijn/healthchecker
 
