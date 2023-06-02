@@ -1,0 +1,92 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.20
+
+      - name: Build for Linux amd64
+        run: GOOS=linux GOARCH=amd64 go build -o healthchecker-linux-amd64 github.com/mvdkleijn/healthchecker
+
+      - name: Build for Linux arm64
+        run: GOOS=linux GOARCH=arm64 go build -o healthchecker-linux-arm64 github.com/mvdkleijn/healthchecker
+
+      - name: Build for Windows amd64
+        run: GOOS=windows GOARCH=amd64 go build -o healthchecker-windows-amd64 github.com/mvdkleijn/healthchecker
+
+      - name: Build for Windows arm64
+        run: GOOS=windows GOARCH=arm64 go build -o healthchecker-windows-arm64 github.com/mvdkleijn/healthchecker
+
+      - name: Set up Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Generate Tag Name
+        id: tag_name
+        run: echo "v$(date +'%Y%m%d%H%M%S')" >> tag_name.txt
+
+      - name: Create Tag
+        run: git tag $(cat tag_name.txt)
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_name.outputs.stdout }}
+          release_name: Release ${{ steps.tag_name.outputs.stdout }}
+
+      - name: Upload Linux amd64 artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./healthchecker-linux-amd64
+          asset_name: healthchecker-linux-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload Linux arm64 artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./healthchecker-linux-arm64
+          asset_name: healthchecker-linux-arm64
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows amd64 artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./healthchecker-windows-amd64
+          asset_name: healthchecker-windows-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows arm64 artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./healthchecker-windows-arm64
+          asset_name: healthchecker-windows-arm64
+          asset_content_type: application/octet-stream
