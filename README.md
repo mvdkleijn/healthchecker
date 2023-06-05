@@ -1,7 +1,6 @@
 # Healthchecker
 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/mvdkleijn/healthchecker?style=for-the-badge)
-[![Codacy Badge](https://img.shields.io/codacy/grade/3dde6794f6c14b7badd3989cee3b5671?style=for-the-badge)](https://app.codacy.com/gh/mvdkleijn/healthchecker/dashboard)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mvdkleijn/healthchecker?style=for-the-badge)](https://goreportcard.com/report/github.com/mvdkleijn/healthchecker)
 ![Liberapay patrons](https://img.shields.io/liberapay/patrons/mvdkleijn?style=for-the-badge)
 
